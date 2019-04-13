@@ -1,0 +1,9 @@
+ .level_counter {
+                position: absolute;
+                z-index: 2;
+                color: #FFFFFF;
+                font-family: "Montserrat", sans-serif;
+                font-size: 300px;
+                left: 100px;
+                top: 60px;
+            }
