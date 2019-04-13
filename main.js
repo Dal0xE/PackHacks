@@ -31,11 +31,16 @@ document.getElementById("start").onclick = function(){
     document.getElementById("name").style.display = "none";
     document.getElementById("goal").style.display = "none";
     document.getElementById("win_box").style.display = "block";
+     document.getElementById("h1").style.display = "block";
+    document.getElementById("h2").style.display = "block";
+    document.getElementById("h3").style.display = "block";
+    document.getElementById("level").style.display = "block";
     var level2 = false;
     var level3 = false;
     var level4 = false; 
     var level5 = false; 
     engine.spawn("SINK", 300, 550); //First Level Sink
+    engine.spawn("WALL", 230, 650);
     //Spawning First Level Walls goes here
     startLooping();
 }
