@@ -17,15 +17,28 @@ function randomMap(){
         }
     }
 }
-var hearts = 0; //setting hearts in beginning
+var hearts = 0.7; //setting hearts in beginning
 
 function lowerH(){
-    for (var i = 3; i>hearts; i--){
-document.getElementById("heart" + i).innerHTML = "<img src='assets/border.png' class = 'heart'>"
+    for (var i = 3; i>Math.ceil(hearts); i--){
+document.getElementById("heart" + i).innerHTML = "<img src='assets/border.png' class = 'heart' id = 'h" + i +  "'>";       
     }
+if (hearts > 2 && hearts < 3){
+    document.getElementById("h3").style.width = 50*(hearts - Math.floor(hearts) + 0.1) + "px";
+    document.getElementById("h3").style.height = 50*(hearts - Math.floor(hearts) + 0.1) + "px";   
+}   
+if (hearts > 0 && hearts < 1){
+    document.getElementById("h1").style.width = 50*(hearts - Math.floor(hearts) + 0.1) + "px";
+    document.getElementById("h1").style.height = 50*(hearts - Math.floor(hearts) + 0.1) + "px";   
+}  
+if (hearts > 1 && hearts < 2){
+    document.getElementById("h2").style.width = 50*(hearts - Math.floor(hearts) + 0.1) + "px";
+    document.getElementById("h2").style.height = 50*(hearts - Math.floor(hearts) + 0.1) + "px";   
+}      
 }
+
 lowerH();
 
 var lvl = 1; 
 
-document.geftElementById("level").innerHTML = "Level " + lvl;
+document.getElementById("level").innerHTML = "Level " + lvl;
