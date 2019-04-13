@@ -1,4 +1,4 @@
-var randomMap = function(){
+function randomMap(){
     for(var sinkX = 0; sinkX<5; sinkX++){
         for(var sinkY = 0; sinkY<140; sinkY++){
             if (Math.random() < 0.2){
@@ -17,11 +17,15 @@ var randomMap = function(){
         }
     }
 }
-var hearts = 2; //Beginning of game
-var lowerHearts = function(){
-    for (var i = 3; i<hearts; i--){
-        document.getElementById("heart" + i).innerHTML = "<img src='assets/border.png' class = 'heart'>"
+var hearts = 0; //setting hearts in beginning
+
+function lowerH(){
+    for (var i = 3; i>hearts; i--){
+document.getElementById("heart" + i).innerHTML = "<img src='assets/border.png' class = 'heart'>"
     }
 }
+lowerH();
 
-lowerHearts();
+var lvl = 1; 
+
+document.geftElementById("level").innerHTML = "Level " + lvl;
