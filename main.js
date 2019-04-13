@@ -1,15 +1,5 @@
-function randomMap(){
-var random = Math.random()*2;
-if (random < 1){    
-engine.spawn("SINK", Math.random()*450, Math.random()*100 + 500);
-}
-if (Math.random() * 2 < 1 || random > 1){
-engine.spawn("SINK", Math.random()*100 + 500, Math.random()*450);    
-}
-    
 
-}
-randomMap();
+
 var hearts = 3; //setting hearts in beginning
 
 function lowerH(){
@@ -36,7 +26,25 @@ var lvl = 1;
 
 document.getElementById("level").innerHTML = "Level " + lvl;
 
+document.getElementById("start").onclick = function(){
+    document.getElementById("start").style.display = "none";
+    var level2 = false;
+    var level3 = false;
+    var level4 = false; 
+    var level5 = false; 
+    engine.spawn("SINK", 300, 550); //First Level Sink
+    //Spawning First Level Walls goes here
+    startLooping();
+}
+
 function startLooping(){
+
+    if (level2){
+        engine.spawn("SINK", 400, 550);
+        engine.spawn("SINK", 550, 350);
+        level2 = false; 
+    }
+    
     while(true){
         engine.loop();
     }
