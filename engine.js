@@ -18,6 +18,10 @@ var engine = {};
 
 engine.staticVicinityUpdates = [];
 
+engine.registerStaticVicinityCheck = function(entity, range) {
+    this.staticVicinityUpdates.push([entity, range]);
+}
+
 engine.frameid = 0;
 
 engine.warn = function(message) {
@@ -64,7 +68,7 @@ function registerEntityToFrame(entity) {
 }
 
 function Frame(framenumber) {
-    this.vicinityUpdates = [];
+    this.vicinityUpdates = engine.staticVicinityUpdates;
     this.receivedCoords = [];
     this.registerVicinityUpdate = registerVicinityUpdate;
     this.frame = framenumber;
@@ -84,6 +88,9 @@ engine.loop = function() {
     this.frame = new Frame(this.frameid)
     this.entities.forEach(function(entity) {
         entity.eventLoopCallback(this.frame);
+        this.frame.vicinityUpdates.forEach(function(update) {
+            if (this.distance([entity.x, entity.y], [update[0].x, update[0].y]) <= update[1]) update[0].vicinityCallback();
+        })
     });
     this.frameid++;
 }
@@ -118,6 +125,10 @@ engine.spawn = function(type, x, y) {
         case "SINK":
             var entity = new Sink(this.createAsset('/assets/sink.svg'), x, y);
             engine.register(entity);
+            break;
+        case "WALL":
+            var entity = new Entity(this.createAsset('/assets/wall.svg'), x, y);
+            entity.shield = 0;
             break;
     }
 }
@@ -169,6 +180,8 @@ function Sink(id, x, y) {
     }
     this.type = "SINK";
 }
+
+function Wall()
 
 function Player(id, x, y) {
     Entity.call(this, id);
