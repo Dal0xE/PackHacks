@@ -27,6 +27,7 @@ var lvl = 1;
 document.getElementById("level").innerHTML = "Level " + lvl;
 
 document.getElementById("start").onclick = function(){
+    document.getElementById("music").play();
     document.getElementById("start").style.display = "none";
     document.getElementById("name").style.display = "none";
     document.getElementById("goal").style.display = "none";
