@@ -30,6 +30,7 @@ document.getElementById("start").onclick = function(){
     document.getElementById("start").style.display = "none";
     document.getElementById("name").style.display = "none";
     document.getElementById("goal").style.display = "none";
+    document.getElementById("win_box").style.display = "block";
     var level2 = false;
     var level3 = false;
     var level4 = false; 
