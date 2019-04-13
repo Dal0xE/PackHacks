@@ -16,11 +16,6 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 var engine;
 
-engine.assets = {
-    sink: "/sink.svg",
-    wall: "/wall.svg"
-}
-
 engine.warn = function(message) {
     console.log("[ENGINE, WARN] " + message);
 }
@@ -33,6 +28,11 @@ engine.move = function(entity, movementVector) {
     entity.element.style.transform = "translate(" + (entity.x + movementVector[0]).toString() + "," + (entity.y + movementVector[1]).toString() + ")";
     entity.x += movementVector[0];
     entity.y += movementVector[1];
+}
+engine.setPosition(entity, x, y) {
+    entity.element.style.transform = "translate(" + x.toString() + "px, " + y.toString() + "px)";
+    entity.x = x;
+    entity.y = y;
 }
 
 engine.attackEntityXY(entity, positionVector, damage) {
@@ -94,8 +94,8 @@ engine.spawn = function(type, x, y) {
         case "PLAYER":
             break;
         case "SINK":
-            var entity = new Sink(this.createAsset('/assets/sink'), x, y);
-            
+            var entity = new Sink(this.createAsset('/assets/sink.svg'), x, y);
+            break;
     }
 }
 
@@ -111,8 +111,7 @@ function Entity(elemID) {
 
 function AttackEntity(x, y, damage) {
     Entity.call(this, "generalElem");
-    this.x = x;
-    this.y = y;
+    engine.setPostition(this, x, y);
     this.type = "ATTACK";
     this.vicinityCallback = function(entity) {
         if (entity.type == "PLAYER") entity.harm(damage);
@@ -124,15 +123,19 @@ function AttackEntity(x, y, damage) {
 
 function Sink(id, x, y) {
     Entity.call(this, id);
-    this.x = x;
-    this.y = y;
+    engine.setPosition(this, x, y);
     this.vicinityCallback = function(entity) {
         
     }
     this.type = "SINK";
 }
 
+function Player(id, x, y) {
+    Entity.call(this, id);
+    engine.setPosition(this, x, y);
+}
+
 engine.registerPlayer = function() {
     if (this.player) this.warn("Attempted to spawn a player when one already exists.");
-    else 
+    else engine.spawn("PLAYER", 400, 100);
 }

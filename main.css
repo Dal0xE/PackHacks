@@ -1,18 +1,18 @@
  .level_counter {
-                position: absolute;
-                z-index: 2mm;
-                color: black;
-                font-size: 50px;
-                text-align: center;
-                width: 100%;
-                top: 10px;
+     position: absolute;
+     z-index: 2mm;
+     color: black;
+     font-size: 50px;
+     text-align: center;
+     width: 100%;
+     top: 10px;
             }
-.game_window {
-            z-index: 0;
-            background-color: lightcyan;
-            width: 1100px; 
-            height: 800px;
-            margin: auto;
+#game_window {
+    z-index: 0;
+    background-color: lightcyan;
+    width: 1100px; 
+    height: 800px;
+    margin: auto;
 }
 .container {
     position: absolute;
