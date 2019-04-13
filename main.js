@@ -27,3 +27,5 @@ var randomMap = function(){
 }
 
 randomMap();
+var lvl = 2; 
+document.getElementById("level").innerHTML = "Level " + lvl;
