@@ -1,10 +1,10 @@
 function randomMap(){
 var random = Math.random()*2;
 if (random < 1){    
-engine.spawn("SINK", Math.random()*550, Math.random()*200 + 400);
+engine.spawn("SINK", Math.random()*450, Math.random()*100 + 500);
 }
 if (Math.random() * 2 < 1 || random > 1){
-engine.spawn("SINK", Math.random()*200 + 400, Math.random()*550);    
+engine.spawn("SINK", Math.random()*100 + 500, Math.random()*450);    
 }
     
 
