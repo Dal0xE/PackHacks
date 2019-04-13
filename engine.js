@@ -14,7 +14,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
     }
 }
 
-var engine;
+var engine = {};
 
 engine.warn = function(message) {
     console.log("[ENGINE, WARN] " + message);
@@ -29,13 +29,13 @@ engine.move = function(entity, movementVector) {
     entity.x += movementVector[0];
     entity.y += movementVector[1];
 }
-engine.setPosition(entity, x, y) {
+engine.setPosition = function(entity, x, y) {
     entity.element.style.transform = "translate(" + x.toString() + "px, " + y.toString() + "px)";
     entity.x = x;
     entity.y = y;
 }
 
-engine.attackEntityXY(entity, positionVector, damage) {
+engine.attackEntityXY = function(entity, positionVector, damage) {
     if (this.distance([entity.x, entity.y], positionVector) > 5) return;
     this.register(new AttackEntity(positionVector[0], positionVector[1], damage));
 }
@@ -77,12 +77,12 @@ engine.loop = function() {
 
 engine.generateId = function() {
     var id = '';
-    const alpha = 'abcdefghijklmnopqrstuvwxyz1234567890';
+    var alpha = 'abcdefghijklmnopqrstuvwxyz1234567890';
     for (var i = 0; i < 20; i++) {
-        id += alpha[Math.random() * alpha.length];
+        id += alpha[Math.floor(Math.random() * alpha.length)];
     }
     if (document.getElementById(id) == undefined) return id;
-    else return generateId();
+    else return engine.generateId();
 }
 
 engine.createAsset = function(url) {
@@ -100,6 +100,7 @@ engine.spawn = function(type, x, y) {
             break;
         case "SINK":
             var entity = new Sink(this.createAsset('/assets/sink.svg'), x, y);
+            engine.register(entity);
             break;
     }
 }
