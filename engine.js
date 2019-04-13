@@ -127,7 +127,8 @@ engine.spawn = function(type, x, y) {
             engine.register(entity);
             break;
         case "WALL":
-            var entity = new Entity(this.createAsset('/assets/wall.svg'), x, y);
+            var entity = new Entity(this.createAsset('/assets/wall.svg'));
+            engine.setPosition(entity, x, y);
             entity.shield = 0;
             break;
     }
@@ -180,8 +181,6 @@ function Sink(id, x, y) {
     }
     this.type = "SINK";
 }
-
-function Wall()
 
 function Player(id, x, y) {
     Entity.call(this, id);
