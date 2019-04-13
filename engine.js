@@ -16,6 +16,10 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 var engine = {};
 
+engine.staticVicinityUpdates = [];
+
+engine.frameid = 0;
+
 engine.warn = function(message) {
     console.log("[ENGINE, WARN] " + message);
 }
@@ -25,7 +29,7 @@ engine.distance = function(coord1, coord2) {
 }
 
 engine.move = function(entity, movementVector) {
-    entity.element.style.transform = "translate(" + (entity.x + movementVector[0]).toString() + "px ," + (entity.y + movementVector[1]).toString() + "px)";
+    entity.element.style.transform = "translate(" + ((entity.x + movementVector[0] >= 0 ? entity.x + movementVector[0] : 0)).toString() + "px ," + (entity.y + movementVector[1]).toString() + "px)";
     entity.x += movementVector[0];
     entity.y += movementVector[1];
 }
@@ -38,7 +42,7 @@ engine.setPosition = function(entity, x, y) {
 
 engine.rotate = function(entity, degrees) {
     entity.element.style.transform = "translate(" + entity.x + "px, " + entity.y + "px) rotate(" + degrees + "deg)";
-    this.rotate = degrees;
+    entity.rotate = degrees;
 }
 
 engine.attackEntityXY = function(entity, positionVector, damage) {
@@ -59,10 +63,11 @@ function registerEntityToFrame(entity) {
     });
 }
 
-function Frame() {
+function Frame(framenumber) {
     this.vicinityUpdates = [];
     this.receivedCoords = [];
     this.registerVicinityUpdate = registerVicinityUpdate;
+    this.frame = framenumber;
 }
 
 engine.entities = [];
@@ -76,9 +81,11 @@ engine.unregister = function(entity) {
 }
 
 engine.loop = function() {
+    this.frame = new Frame(this.frameid)
     this.entities.forEach(function(entity) {
         entity.eventLoopCallback(this.frame);
     });
+    this.frameid++;
 }
 
 engine.generateId = function() {
@@ -103,6 +110,10 @@ engine.createAsset = function(url) {
 engine.spawn = function(type, x, y) {
     switch (type) {
         case "PLAYER":
+            if (engine.player) return;
+            var player = new Player(this.createAsset('/assets/player.svg'), x, y);
+            engine.player = player;
+            engine.register(player);
             break;
         case "SINK":
             var entity = new Sink(this.createAsset('/assets/sink.svg'), x, y);
@@ -134,13 +145,18 @@ function Entity(elemID) {
 
 function AttackEntity(x, y, damage) {
     Entity.call(this, "generalElem");
-    engine.setPostition(this, x, y);
+    engine.setPosition(this, x, y);
     this.type = "ATTACK";
     this.shield = 0; //invulnerable
+    this.firstFrame = engine.frameid;
     this.vicinityCallback = function(entity) {
         if (entity.type == "PLAYER") entity.harm(damage);
     }
     this.eventLoopCallback = function(frame) {
+        if (frame.frame >= this.firstFrame + 2) {
+            engine.unregister(this);
+            this.element.destroy();
+        }
         frame.registerVicinityUpate(this, 5);
     }
 }
@@ -161,7 +177,7 @@ function Player(id, x, y) {
     this.damageModifier = 0;
     this.shield = 1;
     this.damage = function(amount) {
-        this.health -= amount * shield;
+        this.health -= amount * this.shield;
         lowerH(this.health);
         if (this.health <= 0) gameOver();
     }
