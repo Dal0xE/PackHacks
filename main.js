@@ -4,7 +4,7 @@ if (random < 1){
 engine.spawn("SINK", Math.random()*550, Math.random()*200 + 400);
 }
 if (Math.random() * 2 < 1 || random > 1){
-engine.spawn("SINK", Math.random()*200 + 400, Math.random()*5500);    
+engine.spawn("SINK", Math.random()*200 + 400, Math.random()*550 + 400);    
 }
     
 
