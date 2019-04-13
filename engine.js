@@ -18,6 +18,31 @@ var engine = {};
 
 engine.staticVicinityUpdates = [];
 
+engine.keys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    space: false
+}
+
+addEventListener(document, "keydown", function(e) {
+    switch (e.keyCode) {
+        case 87:
+            engine.keys.up = true;
+            break;
+        case 65:
+            engine.keys.left = true;
+            break;
+        case 68:
+            engine.keys.right = true;
+            break;
+        case 83:
+            engine.keys.down = true;
+            break;
+    }
+});
+
 engine.registerStaticVicinityCheck = function(entity, range) {
     this.staticVicinityUpdates.push([entity, range]);
 }
@@ -85,7 +110,7 @@ engine.unregister = function(entity) {
 }
 
 engine.loop = function() {
-    this.frame = new Frame(this.frameid)
+    this.frame = new Frame(this.frameid);
     this.entities.forEach(function(entity) {
         entity.eventLoopCallback(this.frame);
         this.frame.vicinityUpdates.forEach(function(update) {
@@ -121,11 +146,11 @@ engine.spawn = function(type, x, y) {
             var player = new Player(this.createAsset('/assets/player.svg'), x, y);
             engine.player = player;
             engine.register(player);
-            break;
+            return player;
         case "SINK":
             var entity = new Sink(this.createAsset('/assets/sink.svg'), x, y);
             engine.register(entity);
-            break;
+            return entity;
         case "WALL":
             var entity = new Entity(this.createAsset('/assets/wall.svg'));
             engine.setPosition(entity, x, y);
@@ -146,6 +171,7 @@ function Entity(elemID) {
     this.shield = 1;
     this.rotation = 0;
     this.damageModifier = 0;
+    this.solid = true;
     this.damage = function(amount) {
         this.health -= amount * shield;
         if (this.health <= 0) {
@@ -159,6 +185,7 @@ function AttackEntity(x, y, damage) {
     Entity.call(this, "generalElem");
     engine.setPosition(this, x, y);
     this.type = "ATTACK";
+    this.solid = false;
     this.shield = 0; //invulnerable
     this.firstFrame = engine.frameid;
     this.vicinityCallback = function(entity) {
@@ -188,6 +215,7 @@ function Player(id, x, y) {
     this.health = 3;
     this.damageModifier = 0;
     this.shield = 1;
+    this.solid = false;
     this.damage = function(amount) {
         this.health -= amount * this.shield;
         lowerH(this.health);
