@@ -17,4 +17,11 @@ var randomMap = function(){
         }
     }
 }
+var hearts = 2; //Beginning of game
+var lowerHearts = function(){
+    for (var i = 3; i<hearts; i--){
+        document.getElementById("heart" + i).innerHTML = "<img src='assets/border.png' class = 'heart'>"
+    }
+}
 
+lowerHearts();
