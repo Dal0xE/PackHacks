@@ -25,14 +25,20 @@ engine.distance = function(coord1, coord2) {
 }
 
 engine.move = function(entity, movementVector) {
-    entity.element.style.transform = "translate(" + (entity.x + movementVector[0]).toString() + "," + (entity.y + movementVector[1]).toString() + ")";
+    entity.element.style.transform = "translate(" + (entity.x + movementVector[0]).toString() + "px ," + (entity.y + movementVector[1]).toString() + "px)";
     entity.x += movementVector[0];
     entity.y += movementVector[1];
 }
+
 engine.setPosition = function(entity, x, y) {
     entity.element.style.transform = "translate(" + x.toString() + "px, " + y.toString() + "px)";
     entity.x = x;
     entity.y = y;
+}
+
+engine.rotate = function(entity, degrees) {
+    entity.element.style.transform = "translate(" + entity.x + "px, " + entity.y + "px) rotate(" + degrees + "deg)";
+    this.rotate = degrees;
 }
 
 engine.attackEntityXY = function(entity, positionVector, damage) {
@@ -115,6 +121,7 @@ function Entity(elemID) {
     this.type = "UNDEFINED";
     this.health = 2;
     this.shield = 1;
+    this.rotation = 0;
     this.damageModifier = 0;
     this.damage = function(amount) {
         this.health -= amount * shield;
