@@ -26,7 +26,7 @@ engine.keys = {
     space: false
 }
 
-addEventListener(document, "keydown", function(e) {
+document.addEventListener("keydown", function(e) {
     switch (e.keyCode) {
         case 87:
             engine.keys.up = true;
@@ -40,7 +40,23 @@ addEventListener(document, "keydown", function(e) {
         case 83:
             engine.keys.down = true;
             break;
+        case 38:
+            engine.keys.up = true;
+            break;
+        case 37:
+            engine.keys.left = true;
+            break;
+        case 39:
+            engine.keys.right = true;
+            break;
+        case 40:
+            engine.keys.down = true;
+            break;
     }
+});
+
+document.addEventListener("keyup", function(e) {
+    
 });
 
 engine.registerStaticVicinityCheck = function(entity, range) {
