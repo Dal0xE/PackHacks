@@ -56,9 +56,8 @@ document.getElementById("start").onclick = function(){
     
     //Second Level 
     engine.spawn("SINK", 400, 550);
-    
     engine.spawn("SINK", 550, 150);
-    //engine.rotate(sink, 90);
+    
     
     engine.spawn("WALL", 135, 550);
     engine.spawn("WALL", 135, 390);
