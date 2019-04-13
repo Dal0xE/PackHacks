@@ -50,3 +50,19 @@
     margin-top: 350px;
     display: block;
 }
+#name{
+            position: relative;
+                z-index: 2;
+                color: royalblue;
+                font-family: sans-serif;
+                font-size: 100px;
+                text-align: center;
+}
+#goal{
+            position: relative;
+                z-index: 2;
+                color: royalblue;
+                font-family: sans-serif;
+                font-size: 50px;
+                text-align: center;
+}

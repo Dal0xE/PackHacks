@@ -28,6 +28,8 @@ document.getElementById("level").innerHTML = "Level " + lvl;
 
 document.getElementById("start").onclick = function(){
     document.getElementById("start").style.display = "none";
+    document.getElementById("name").style.display = "none";
+    document.getElementById("goal").style.display = "none";
     var level2 = false;
     var level3 = false;
     var level4 = false; 
