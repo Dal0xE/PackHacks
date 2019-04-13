@@ -17,7 +17,7 @@ function randomMap(){
         }
     }
 }
-var hearts = 0.7; //setting hearts in beginning
+var hearts = 3; //setting hearts in beginning
 
 function lowerH(){
     for (var i = 3; i>Math.ceil(hearts); i--){
@@ -42,3 +42,9 @@ lowerH();
 var lvl = 1; 
 
 document.getElementById("level").innerHTML = "Level " + lvl;
+
+function startLooping(){
+    while(true){
+        engine.loop();
+    }
+}
