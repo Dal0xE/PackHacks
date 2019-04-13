@@ -1,22 +1,15 @@
 function randomMap(){
-    for(var sinkX = 0; sinkX<5; sinkX++){
-        for(var sinkY = 0; sinkY<140; sinkY++){
-            if (Math.random() < 0.2){
-                //var sink = null; Sink object here
-                //sink positioning goes here.
-                
-            }
-        }
-    }
-    for (var wallX = 0; wallX<5; wallX++){
-        for (var wallY = 0; wallY<5; wallY++){
-            if (Math.random() < 0.2){
-                //var wall = wall object. Create new entity here
-                //position entity here
-            }
-        }
-    }
+var random = Math.random()*2;
+if (random < 1){    
+engine.spawn("SINK", Math.random()*550, Math.random()*200 + 400);
 }
+if (Math.random() * 2 < 1 || random > 1){
+engine.spawn("SINK", Math.random()*200 + 400, Math.random()*5500);    
+}
+    
+
+}
+randomMap();
 var hearts = 3; //setting hearts in beginning
 
 function lowerH(){
