@@ -37,19 +37,49 @@ document.getElementById("start").onclick = function(){
     document.getElementById("level").style.display = "block";
     var level2 = false;
     var level3 = false;
-    var level4 = false; 
-    var level5 = false; 
-    engine.spawn("SINK", 300, 550); //First Level Sink
-    engine.spawn("WALL", 230, 650);
+    //var level4 = false; 
+    //var level5 = false; 
+    /* engine.spawn("SINK", 300, 550); //First Level Sink
+    engine.spawn("WALL", 135, 550);
+    engine.spawn("WALL", 135, 390);
+    engine.spawn("WALL", 135, 230);
+    engine.spawn("WALL", 550, 550);
+    engine.spawn("WALL", 700, 550);
+
+    engine.spawn("WALL", 700, 0);
+    engine.spawn("WALL", 700, 150);
+    engine.spawn("WALL", 535, 0);
+    engine.spawn("WALL", 0, 230);
+    engine.spawn("WALL", 0, 230);
+    engine.spawn("WALL", 700, 630); */
     //Spawning First Level Walls goes here
+    
+    //Second Level 
+    engine.spawn("SINK", 400, 550);
+    
+    engine.spawn("SINK", 550, 150);
+    //engine.rotate(sink, 90);
+    
+    engine.spawn("WALL", 135, 550);
+    engine.spawn("WALL", 135, 390);
+    engine.spawn("WALL", 135, 230);
+    engine.spawn("WALL", 550, 550);
+    engine.spawn("WALL", 700, 550);
+
+    engine.spawn("WALL", 700, 0);
+    engine.spawn("WALL", 700, 150);
+    engine.spawn("WALL", 535, 0);
+    engine.spawn("WALL", 0, 230);
+    engine.spawn("WALL", 0, 230);
+    engine.spawn("WALL", 700, 630); 
     startLooping();
 }
 
 function startLooping(){
 
     if (level2){
-        engine.spawn("SINK", 400, 550);
-        engine.spawn("SINK", 550, 350);
+        
+        
         level2 = false; 
     }
     
