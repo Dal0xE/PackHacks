@@ -1,4 +1,8 @@
- .level_counter {
+html, body {
+    background-color: white;
+} 
+
+.level_counter {
      position: absolute;
      z-index: 2mm;
      color: black;
