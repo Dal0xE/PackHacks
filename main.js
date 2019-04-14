@@ -52,6 +52,8 @@ document.getElementById("start").onclick = function(){
     engine.spawn("WALL", 0, 230);
     engine.spawn("WALL", 0, 230);
     engine.spawn("WALL", 700, 630); 
+    engine.spawn("PLAYER", 50, 50);
+    //engine.spawn("ENDPAD", 750, 750);
     startLooping();
 }
 

@@ -106,11 +106,9 @@ engine.move = function(entity, movementVector) {
 }
 
 engine.setPosition = function(entity, x, y) {
-    console.log([x, y]);
     entity.element.style.transform = "translate(" + x.toString() + "px, " + y.toString() + "px)";
     entity.x = x;
     entity.y = y;
-    console.log([x, y]);
 }
 
 engine.rotate = function(entity, degrees) {
@@ -156,7 +154,6 @@ engine.unregister = function(entity) {
 
 engine.loop = function() {
     var finalDestination = [engine.player.x, engine.player.y];
-    console.log([engine.player.x, engine.player.y]);
     if (engine.keys.up) {
         finalDestination[1] -= 4;
     }
@@ -175,8 +172,8 @@ engine.loop = function() {
     });
     //console.log(intersected);
     if (!intersected) {
+        //if (engine.endPad.intersects(finalDestination)) level2 = true;
         engine.setPosition(engine.player, finalDestination[0], finalDestination[1]);
-        console.log(finalDestination);
     }
     engine.frame = new Frame(this.frameid);
     engine.entities.forEach(function(entity) {
@@ -224,6 +221,11 @@ engine.spawn = function(type, x, y) {
             engine.setPosition(entity, x, y);
             entity.shield = 0;
             break;
+        case "ENDPAD":
+            var entity = new Entity(this.createAsset('/assets/stairs.svg'));
+            engine.setPosition(entity, x, y);
+            entity.shield = 0;
+            engine.endPad = entity;
     }
 }
 
@@ -248,8 +250,7 @@ function Entity(elemID) {
         }
     }
     this.intersects = function(coords) {
-        console.log(this.x < coords[0] < (this.x + this.element.width) && this.y < coords[1] < (this.y + this.element.width));
-        return false;
+        return (this.x < coords[0] && coords[0] < (this.x + this.element.width) && this.y < coords[1] && coords[1] < (this.y + this.element.width));
     }
 }
 
