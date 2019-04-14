@@ -17,6 +17,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 var engine = {};
 
 engine.staticVicinityUpdates = [];
+engine.solids = [];
 
 engine.keys = {
     up: false,
@@ -56,7 +57,32 @@ document.addEventListener("keydown", function(e) {
 });
 
 document.addEventListener("keyup", function(e) {
-    
+    switch (e.keyCode) {
+        case 87:
+            engine.keys.up = false;
+            break;
+        case 65:
+            engine.keys.left = false;
+            break;
+        case 68:
+            engine.keys.right = false;
+            break;
+        case 83:
+            engine.keys.down = false;
+            break;
+        case 38:
+            engine.keys.up = false;
+            break;
+        case 37:
+            engine.keys.left = false;
+            break;
+        case 39:
+            engine.keys.right = false;
+            break;
+        case 40:
+            engine.keys.down = false;
+            break;
+    }
 });
 
 engine.registerStaticVicinityCheck = function(entity, range) {
@@ -80,9 +106,11 @@ engine.move = function(entity, movementVector) {
 }
 
 engine.setPosition = function(entity, x, y) {
+    console.log([x, y]);
     entity.element.style.transform = "translate(" + x.toString() + "px, " + y.toString() + "px)";
     entity.x = x;
     entity.y = y;
+    console.log([x, y]);
 }
 
 engine.rotate = function(entity, degrees) {
@@ -119,6 +147,7 @@ engine.entities = [];
 
 engine.register = function(entity) {
     this.entities.push(entity);
+    if (entity.solid) this.solids.push(entity);
 }
 
 engine.unregister = function(entity) {
@@ -126,12 +155,35 @@ engine.unregister = function(entity) {
 }
 
 engine.loop = function() {
-    this.frame = new Frame(this.frameid);
-    this.entities.forEach(function(entity) {
+    var finalDestination = [engine.player.x, engine.player.y];
+    console.log([engine.player.x, engine.player.y]);
+    if (engine.keys.up) {
+        finalDestination[1] -= 4;
+    }
+    if (engine.keys.down) {
+        finalDestination[1] += 4;
+    }
+    if (engine.keys.left) {
+        finalDestination[0] -= 4;
+    }
+    if (engine.keys.right) {
+        finalDestination[0] += 4;
+    }
+    var intersected = false;
+    engine.solids.forEach(function(solid) {
+        if (solid.intersects(finalDestination)) intersected = true;
+    });
+    //console.log(intersected);
+    if (!intersected) {
+        engine.setPosition(engine.player, finalDestination[0], finalDestination[1]);
+        console.log(finalDestination);
+    }
+    engine.frame = new Frame(this.frameid);
+    engine.entities.forEach(function(entity) {
         entity.eventLoopCallback(this.frame);
-        this.frame.vicinityUpdates.forEach(function(update) {
-            if (this.distance([entity.x, entity.y], [update[0].x, update[0].y]) <= update[1]) update[0].vicinityCallback();
-        })
+        engine.frame.vicinityUpdates.forEach(function(update) {
+            if (engine.distance([entity.x, entity.y], [update[0].x, update[0].y]) <= update[1]) update[0].vicinityCallback();
+        });
     });
     this.frameid++;
 }
@@ -194,6 +246,10 @@ function Entity(elemID) {
             engine.unregister(this);
             this.element.destroy();
         }
+    }
+    this.intersects = function(coords) {
+        console.log(this.x < coords[0] < (this.x + this.element.width) && this.y < coords[1] < (this.y + this.element.width));
+        return false;
     }
 }
 

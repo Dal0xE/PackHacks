@@ -58,9 +58,7 @@ document.getElementById("start").onclick = function(){
 function startLooping(){
     
     
-    while(true){
-        engine.loop();
-    }
+    setInterval(engine.loop, 5);
 }
   /* //Second Level 
     engine.spawn("SINK", 300, 550);
